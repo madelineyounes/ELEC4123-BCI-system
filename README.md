@@ -2,3 +2,4 @@
 EEG Brain Computer Interface System Design
 
 Angus McIntyre
+Ke Zhao

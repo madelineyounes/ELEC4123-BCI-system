@@ -1,15 +1,10 @@
 % ELEC4123 Elective - Analog Electronics & DSP
 % Team 12
 
-% Delta waves: 0–4 Hz
-% Theta waves: 4–8 Hz
-% Alpha waves: 8–12 Hz
-% Beta waves: 12–40 Hz
-
 %% View real EEG data (not on Github due to large file sizes)
 
 clear;
-i = 1;
+i = 2;
 load(sprintf('data/EEGdata/Real EEG data/rec%d.mat', i));
 L = length(channelData);
 figure(1);
@@ -55,15 +50,15 @@ text(26, 0, 'Beta', 'color', 'r', 'FontSize', 16, 'HorizontalAlignment', 'center
 clear;
 fs = 512;
 
-noisy = false;
 % Load EEG signal
+noisy = false;
 if noisy
     % Noisy
     fname = 'beta1.mat';
     eeg = load(sprintf('data/EEGdata/Synthetic EEG Fs512Hz/Noise/%s', fname)).noisy_EEGsig;
 else
     % Noiseless
-    i = 6;
+    i = 1;
     eeg = load(sprintf('data/EEGdata/Synthetic EEG Fs512Hz/Noiseless/eeg%d.mat', i)).eeg;
 end
 L = length(eeg);
@@ -103,4 +98,55 @@ text(2, 0, 'Delta', 'color', 'r', 'FontSize', 16, 'HorizontalAlignment', 'center
 text(6, 0, 'Theta', 'color', 'r', 'FontSize', 16, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom');
 text(10, 0, 'Alpha', 'color', 'r', 'FontSize', 16, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom');
 text(26, 0, 'Beta', 'color', 'r', 'FontSize', 16, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom');
+
+%% Signal processing
+% Derived from DP DSP Task 4 starting code
+
+% Load EEG signal
+noisy = false;
+if noisy
+    % Noisy
+    fname = 'alpha1.mat';
+    eeg = load(sprintf('data/EEGdata/Synthetic EEG Fs512Hz/Noise/%s', fname)).noisy_EEGsig;
+else
+    % Noiseless
+    i = 1;
+    eeg = load(sprintf('data/EEGdata/Synthetic EEG Fs512Hz/Noiseless/eeg%d.mat', i)).eeg;
+end
+L = length(eeg);
+fs = 512;
+N = 1 * fs;
+hop = 0.125 * fs;
+num_frames = ceil((L-N)/hop);
+decision = zeros(num_frames, 1);
+
+% Windows
+frame_win = hamming(N);
+frame_delta = hamming(4);
+frame_theta = hamming(4);
+frame_alpha = hamming(4);
+frame_beta = hamming(28);
+
+% Loop through all frames in the signal
+for i = 1:num_frames
+    j = (i-1)*hop + 1;
+    frame = eeg(j:j+N-1);
+    
+    % Frame windowing
+    frame = frame .* frame_win;
+    
+    % FFT (check magnitude vs. power spectrum)
+    Frame = abs(fft(frame)).^2;
+    Frame = Frame(1:(N/2)); % Single sided magnitude response
+    
+    % Frequency band windowing
+    
+
+    % Adaptive threshold
+    
+end
+
+
+
+
 

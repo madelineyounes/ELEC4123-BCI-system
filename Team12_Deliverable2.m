@@ -204,7 +204,7 @@ for i = 1:num_frames
     delta_avg = mean(Frame_delta) - noise_threshold;
     theta_avg = mean(Frame_theta) - noise_threshold;
     alpha_avg = mean(Frame_alpha) - noise_threshold;
-    beta_avg = 7*mean(Frame_beta) - noise_threshold;
+    beta_avg = mean(Frame_beta) - noise_threshold;
     
     % Estimate noise from 40 - 255 Hz
     % Update noise estimate every frame

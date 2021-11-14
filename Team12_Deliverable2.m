@@ -54,7 +54,7 @@ fs = 512;
 noisy = true;
 if noisy
     % Noisy
-    fname = 'alpha1.mat';
+    fname = 'theta2.mat';
     eeg = load(sprintf('data/EEGdata/Synthetic EEG Fs512Hz/Noise/%s', fname)).noisy_EEGsig;
 else
     % Noiseless
@@ -132,6 +132,12 @@ grid on;
 %% Signal processing
 % Derived from DP DSP Task 4 starting code
 
+% Load in words
+[alphaWord, fs_word]= audioread("data/Word wav files/alphaWord.wav");
+[betaWord, fs_word]= audioread("data/Word wav files/betaWord.wav");
+[deltaWord, fs_word]= audioread("data/Word wav files/deltaWord.wav");
+[thetaWord, fs_word]= audioread("data/Word wav files/thetaWord.wav");
+
 % Load EEG signal
 noisy = true;
 if noisy
@@ -164,8 +170,8 @@ noise_mean = 0;
 noise_std = 0;
 
 % Noise Learning Rate
-mean_eta = 0.9; 
-std_eta = 0.9;
+mean_eta = 0.2; 
+std_eta = 0.2;
 
 % Loop through all frames in the signal
 for i = 1:num_frames
@@ -215,7 +221,8 @@ for i = 1:num_frames
         [~,index] = max([delta_avg theta_avg alpha_avg beta_avg]);
         decision(i) = index;
     end 
-    
+  
+    % Iteratively updating figure
 %     figure(4)
 %     plot(Frame);
 %     yline(delta_avg, 'r', 'LineWidth', 1.5);
@@ -226,10 +233,22 @@ for i = 1:num_frames
 %     legend('Power Spectrum' ,'delta' ,'theta', 'alpha', 'beta', 'noise threshold');
 %     xlim([0 45]);
 %     pause(2)
+    
+    % Play words
+
+    % Pseudo code
+    
+%     time_required = length(alphaWord)/ fs_word; % duration of word (seconds)
+%     frames_needed_to_play = time_required / hop;
+%     if ()
+%         save = frames_needed_to_play  + i
+%     end
+%     
+    % save is a future time step 
+    % once time step is reached, check past 3 decisions
+    % play word based on majority, 
+    % if all 3 = 0 || no distinct majority (etc), play no word
 end
-
-% xline(4, 'r', 'LineWidth', 1.5);    % Delta waves: 0–4 Hz
-
 
 figure(5)
 plot(decision)
@@ -237,6 +256,15 @@ title('Results');
 xlabel('Frame Number');
 ylabel('Decision');
 legend('1 = delta, 2 = theta, 3 = alpha,  4 = beta');
+
+
+% Play words
+
+
+
+
+
+
 
 
 

@@ -22,7 +22,7 @@ else
     eeg = load(sprintf('data/EEGdata/Synthetic EEG Fs512Hz/Noiseless/eeg%d.mat', i)).eeg;
 end
 
-eeg = combine_word;
+% eeg = combine_word;
 
 L = length(eeg);
 fs = 512;

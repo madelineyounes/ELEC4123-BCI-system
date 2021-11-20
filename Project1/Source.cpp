@@ -6,13 +6,15 @@
 // Load in words
 
 #include "AudioFile.h"
-#include "fft.h"
-#include "fft.hpp"
-#include "fft_impl.hpp"
+
 #include "fft_settings.h"
-#include "copy_array.hpp"
 #include "error_handling.hpp"
+#include "fft_impl.hpp"
+#include "copy_array.hpp"
 #include "check_fft.hpp"
+#include "fft.hpp"
+#include "fft.h"
+
 #include <vector>
 #include <math.h>
 #include <chrono>
@@ -110,8 +112,20 @@ int make_decision(double* frame, int N, double* noise_mean, double* noise_std) {
                           0.8160};
     float WIN_NARROW[5] = {0.8160, 0.9080, 1.0000, 0.9080, 0.8160};
 
+    float FFT_TEST_SINE[32] = { 0.0000, 0.2027, 0.4054, 0.6081, 0.8107, 1.0134, 1.2161, 1.4188,
+                                1.6215, 1.8242, 2.0268, 2.2295, 2.4322, 2.6349, 2.8376, 3.0403,
+                                3.2429, 3.4456, 3.6483, 3.8510, 4.0537, 4.2564, 4.4590, 4.6617,
+                                4.8644, 5.0671, 5.2698, 5.4725, 5.6751, 5.8778, 6.0805, 6.2832 };
+
     double* Frame = new double[N];
-    bool b = FFT(); 
+
+    // FFT notes
+    // Input array must be a power of 2
+    // For 1D FFT, use in the form b = FFT(A,B,n,error);
+    // Initialize error, const char * error = NULL, the function returns an error descriptor
+    // User needs to define two types called real_type and complex_type
+    const char* error = NULL;
+    auto b = FFT(FFT_TEST_SINE,Frame,32,error);
 
 
 };

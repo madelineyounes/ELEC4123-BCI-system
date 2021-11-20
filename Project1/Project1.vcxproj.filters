@@ -23,25 +23,10 @@
     <ClInclude Include="AudioFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="fft_settings.h">
+    <ClInclude Include="dj_fft.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="fft.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="fft.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="fft_impl.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="check_fft.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="copy_array.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="error_handling.hpp">
+    <ClInclude Include="csv.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

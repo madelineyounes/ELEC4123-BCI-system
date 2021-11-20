@@ -143,13 +143,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioFile.h" />
-    <ClInclude Include="check_fft.hpp" />
-    <ClInclude Include="copy_array.hpp" />
-    <ClInclude Include="error_handling.hpp" />
-    <ClInclude Include="fft.h" />
-    <ClInclude Include="fft.hpp" />
-    <ClInclude Include="fft_impl.hpp" />
-    <ClInclude Include="fft_settings.h" />
+    <ClInclude Include="csv.h" />
+    <ClInclude Include="dj_fft.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

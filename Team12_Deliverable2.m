@@ -14,7 +14,7 @@
 noisy = true;
 if noisy
     % Noisy
-    fname = 'delta2.mat';
+    fname = 'beta2.mat';
     eeg = load(sprintf('data/EEGdata/Synthetic EEG Fs512Hz/Noise/%s', fname)).noisy_EEGsig;
 else
     % Noiseless

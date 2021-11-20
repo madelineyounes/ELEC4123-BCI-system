@@ -22,7 +22,8 @@ function [decision, noise_mean, noise_std] = make_decision(frame, noise_mean, no
 
     % FFT (Obtain power spectrum)
     Frame = abs(fft(frame)).^2;
-    Frame = Frame(1:(length(frame)/2)); % Single sided magnitude response
+    Frame = Frame * (1/512);
+    Frame = Frame(1:(length(frame)/2)); % Single sided power spectrum
     
     % Frequency band windowing
     Frame_delta = Frame(1:5);   % 0 - 4 Hz 

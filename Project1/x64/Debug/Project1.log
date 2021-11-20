@@ -1,14 +1,24 @@
 ﻿  Source.cpp
-C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(81,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(85,13): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(86,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(250,78): warning C4244: 'return': conversion from '__int64' to 'int', possible loss of data
+C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(69,82): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(70,82): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(71,82): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(72,80): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(90,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(94,13): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(95,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(129,34): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(133,34): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(137,34): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(141,34): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(144,63): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(148,59): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(289,78): warning C4244: 'return': conversion from '__int64' to 'int', possible loss of data
 C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\dj_fft.h(128,15): warning C4244: 'initializing': conversion from 'double' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(171): message : see reference to function template instantiation 'std::vector<std::complex<float>,std::allocator<std::complex<float>>> dj::fft1d<float>(const std::vector<std::complex<float>,std::allocator<std::complex<float>>> &,const dj::fft_dir &)' being compiled
+C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(210): message : see reference to function template instantiation 'std::vector<std::complex<float>,std::allocator<std::complex<float>>> dj::fft1d<float>(const std::vector<std::complex<float>,std::allocator<std::complex<float>>> &,const dj::fft_dir &)' being compiled
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\include\xmemory(714,68): warning C4244: 'argument': conversion from 'double' to 'const std::complex<float>::_Ty', possible loss of data
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\include\xmemory(1610): message : see reference to function template instantiation 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,double&>(_Alloc &,_Objty *const ,double &)' being compiled
           with
@@ -61,14 +71,14 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
           [
               _Iter=double *
           ]
-C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(114): message : see reference to function template instantiation 'std::vector<std::complex<float>,std::allocator<std::complex<float>>>::vector<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,0>(_Iter,_Iter,const _Alloc &)' being compiled
+C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(119): message : see reference to function template instantiation 'std::vector<std::complex<float>,std::allocator<std::complex<float>>>::vector<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,0>(_Iter,_Iter,const _Alloc &)' being compiled
           with
           [
               _Ty=double,
               _Iter=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<double>>>,
               _Alloc=std::allocator<std::complex<float>>
           ]
-C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(114): message : see reference to function template instantiation 'std::vector<std::complex<float>,std::allocator<std::complex<float>>>::vector<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,0>(_Iter,_Iter,const _Alloc &)' being compiled
+C:\Users\Martin\Desktop\ELEC4123\Elective\ELEC4123-BCI-system\Project1\Source.cpp(119): message : see reference to function template instantiation 'std::vector<std::complex<float>,std::allocator<std::complex<float>>>::vector<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,0>(_Iter,_Iter,const _Alloc &)' being compiled
           with
           [
               _Ty=double,

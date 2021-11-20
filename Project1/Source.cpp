@@ -25,6 +25,8 @@
 #include <numeric>
 #include <string>
 
+#define HOP_IN_SECS 0.125
+
 using namespace std;
 
 int make_decision(vector<complex<float>> frame, int N, double* noise_mean, double* noise_std);
@@ -33,22 +35,22 @@ int main()
 {
     // Read in word files
     // AudioFile setup
-    AudioFile<double> alphaFile;
-    AudioFile<double> betaFile;
     AudioFile<double> deltaFile;
     AudioFile<double> thetaFile;
+    AudioFile<double> alphaFile;
+    AudioFile<double> betaFile;
 
     // Load in .wav files as objects
-    alphaFile.load("../data/Word wav files/alphaWord.wav");
-    betaFile.load("../data/Word wav files/betaWord.wav");
     deltaFile.load("../data/Word wav files/deltaWord.wav");
     thetaFile.load("../data/Word wav files/thetaWord.wav");
+    alphaFile.load("../data/Word wav files/alphaWord.wav");
+    betaFile.load("../data/Word wav files/betaWord.wav");
 
     // Obtain length of audio file in seconds
-    double lengthInSeconds_alpha = alphaFile.getLengthInSeconds();
-    double lengthInSeconds_beta = betaFile.getLengthInSeconds();
-    double lengthInSeconds_delta = deltaFile.getLengthInSeconds();
-    double lengthInSeconds_theta = thetaFile.getLengthInSeconds();
+    //double lengthInSeconds_alpha = alphaFile.getLengthInSeconds();
+    //double lengthInSeconds_beta = betaFile.getLengthInSeconds();
+    //double lengthInSeconds_delta = deltaFile.getLengthInSeconds();
+    //double lengthInSeconds_theta = thetaFile.getLengthInSeconds();
 
     // Assume mono channel
     int channel = 0;
@@ -57,10 +59,17 @@ int main()
     int fs_word = alphaFile.getSampleRate();
 
     // Initialize pointers to .wav files
-    vector<double> alphaWord = alphaFile.samples[channel];
-    vector<double> betaWord = betaFile.samples[channel];
     vector<double> deltaWord = deltaFile.samples[channel];
     vector<double> thetaWord = thetaFile.samples[channel];
+    vector<double> alphaWord = alphaFile.samples[channel];
+    vector<double> betaWord = betaFile.samples[channel];
+
+    // Pad audio samples to the next integer number of hops
+    double samples_per_hop = HOP_IN_SECS * fs_word;
+    deltaWord.resize(ceil(deltaFile.getNumSamplesPerChannel() / samples_per_hop) * samples_per_hop, 0.0);
+    thetaWord.resize(ceil(thetaFile.getNumSamplesPerChannel() / samples_per_hop) * samples_per_hop, 0.0);
+    alphaWord.resize(ceil(alphaFile.getNumSamplesPerChannel() / samples_per_hop) * samples_per_hop, 0.0);
+    betaWord.resize(ceil(betaFile.getNumSamplesPerChannel() / samples_per_hop) * samples_per_hop, 0.0);
 
     //// Read in EEG signal as .wav file
     //AudioFile<double> EEGFile;
@@ -81,10 +90,10 @@ int main()
     int L = EEG.size();
     int fs = 512;       // Synthetic EEG signals are sampled at 512 Hz
 
-    int N = 1 * fs;                                 // Frame size in samples
-    int hop = 0.125 * fs;                           // Hop size
-    int num_frames = ceil((L - N) / (float)hop);    // Number of frames
-    int *decision = new int[num_frames + 1]();      // Allocate memory for decision array
+    int N = 1 * fs;                                         // Frame size in samples
+    int hop = HOP_IN_SECS * fs;                             // Hop size
+    int num_frames = ceil((L - N) / (float)hop);            // Number of frames
+    vector<int> decision = vector<int>(num_frames + 1, 0);  // Allocate memory for decision array
 
     // Obtain current time in ms
     using std::cout; using std::endl;
@@ -95,16 +104,12 @@ int main()
     auto time_now = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
     // Check time_now
     // cout << "milliseconds since epoch: " << time_now << endl;
+    int i_finish = 0;
+    vector<double>audio_samples = vector<double>(); // Empty vector
     
     // Noise Parameters
     double noise_mean = 0;
     double noise_std = 0;
-
-    // Convert the EEG data from double vector to complex<float> vector
-    //std::vector<std::complex<float>> EEG_complex = std::vector<std::complex<float>>(L);
-    //for (int i = 0; i < L; i++) {
-    //    EEG_complex[i] = (std::complex<float>)EEG[i];
-    //}
 
     for (int i = 1; i <= num_frames; i++) {
         auto tic = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
@@ -114,28 +119,62 @@ int main()
         vector<complex<float>> frame = vector<complex<float>>(EEG.begin() + j, EEG.begin() + j + N);
         decision[i] = make_decision(frame, N, &noise_mean, &noise_std);
         frame.clear(); frame.shrink_to_fit();
+
+        // 'Play' word
+        if (i >= i_finish) {
+            if (decision[i] == decision[i-1]) {
+                // Decisions agree
+                if (decision[i] == 1) {
+                    audio_samples.insert(audio_samples.end(), deltaWord.begin(), deltaWord.end());
+                    i_finish = i + (deltaWord.size() / samples_per_hop);
+
+                } else if (decision[i] == 2) {
+                    audio_samples.insert(audio_samples.end(), thetaWord.begin(), thetaWord.end());
+                    i_finish = i + (thetaWord.size() / samples_per_hop);
+
+                } else if (decision[i] == 3) {
+                    audio_samples.insert(audio_samples.end(), alphaWord.begin(), alphaWord.end());
+                    i_finish = i + (alphaWord.size() / samples_per_hop);
+
+                } else if (decision[i] == 4) {
+                    audio_samples.insert(audio_samples.end(), betaWord.begin(), betaWord.end());
+                    i_finish = i + (betaWord.size() / samples_per_hop);
+
+                } else if (decision[i] == 0) {
+                    audio_samples.resize(audio_samples.size() + samples_per_hop, 0.0);
+                }
+            } else {
+                // Decisions disagree
+                audio_samples.resize(audio_samples.size() + samples_per_hop, 0.0);
+            }
+        }
     }
-    
-    // Open the output file
-    ofstream file_out;
-    file_out.open(eeg_name + "_decision.csv");
 
     // Write decision to csv file
-    file_out << "Decisions";
     // i = 1 because decision[0] is always 0
+    ofstream file_out_decisions;
+    file_out_decisions.open("../data/Test Results/" + eeg_name + "_decisions.csv");
     for (int i = 1; i < num_frames + 1; i++) {
-        file_out << "," + to_string(decision[i]);
+        if (i == num_frames) {
+            // Last frame
+            file_out_decisions << to_string(decision[i]);
+        } else {
+            file_out_decisions << to_string(decision[i]) + ",";
+        }
     }
-    file_out << "\n";
+    file_out_decisions.close();
 
     // Write audio samples to csv file
-    file_out << "Samples";
-    for (int i = 0; i < 10; i++) {
-        file_out << "," + to_string(i);
+    ofstream file_out_audio_samples;
+    file_out_audio_samples.open("../data/Test Results/" + eeg_name + "_audio_samples.csv");
+    for (int i = 0; i < audio_samples.size(); i++) {
+        if (i == audio_samples.size() - 1) {
+            file_out_audio_samples << to_string(audio_samples[i]);
+        } else {
+            file_out_audio_samples << to_string(audio_samples[i]) + ",";
+        }
     }
-
-    // Close the output file
-    file_out.close();
+    file_out_audio_samples.close();
 
     // Free memory
     alphaWord.clear(); alphaWord.shrink_to_fit();
@@ -143,8 +182,8 @@ int main()
     deltaWord.clear(); deltaWord.shrink_to_fit();
     thetaWord.clear(); thetaWord.shrink_to_fit();
     EEG.clear(); EEG.shrink_to_fit();
-
-    delete[] decision;
+    decision.clear(); decision.shrink_to_fit();
+    audio_samples.clear(); audio_samples.shrink_to_fit();
 }
 
 

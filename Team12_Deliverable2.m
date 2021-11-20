@@ -14,12 +14,12 @@
 noisy = true;
 if noisy
     % Noisy
-    fname = 'beta2.mat';
-    eeg = load(sprintf('data/EEGdata/Synthetic EEG Fs512Hz/Noise/%s', fname)).noisy_EEGsig;
+    name = "beta2";
+    eeg = load("data/EEGdata/Synthetic EEG Fs512Hz/Noise/" + name + ".mat").noisy_EEGsig;
 else
     % Noiseless
     i = 1;
-    eeg = load(sprintf('data/EEGdata/Synthetic EEG Fs512Hz/Noiseless/eeg%d.mat', i)).eeg;
+    eeg = load(sprintf("data/EEGdata/Synthetic EEG Fs512Hz/Noiseless/eeg%d.mat", i)).eeg;
 end
 
 % eeg = combine_word;
@@ -69,50 +69,35 @@ for i = (2:num_frames + 1)
 end
 
 figure(5)
-plot(decision, 'LineWidth', 2)
+plot(decision(2:end), 'LineWidth', 2)
 title('Results');
 xlabel('Frame Number');
 ylabel('Decision');
 legend('1 = delta, 2 = theta, 3 = alpha,  4 = beta');
 
-%% C
 
-% main{
-% 
-%     
-%     decision(i+1) = make_decision(current_frame)
-%     
-%     store last 3 decisions
-% 
-%     decide what to play
-% 
-%     play word
-% 
-% 
-% }
+%% Plot and play output from C++ code
 
-%
-    % Pseudo code
-%     
-%     time_required = length(alphaWord)/fs_word; % duration of word (seconds)
-%     frames_needed_to_play = time_required / hop;
-%     tic
-%     if (playing)
-%             decision_check
-%             save = frames_needed_to_play  + i
-%     end
-% 
-%     % save is a future time step 
-%     % once time step is reached, check past 3 decisions
-%     % play word based on majority, 
-%     % if all 3 = 0 || no distinct majority (etc), play no word
-%     
-%     clock
-%     pause(computation)
+% Load test results
+% name = "theta1";
+test_results_decisions = csvread("data/Test Results/" + name + "_decisions.csv");
+test_results_audio_samples = csvread("data/Test Results/" + name + "_audio_samples.csv");
 
+figure(6);
+sgtitle("Test Results: " + name + ".csv");
 
+subplot(2, 1, 1);
+plot(test_results_decisions, 'LineWidth', 2);
+title('Decisions');
+xlabel('Frame Number');
+ylabel('Decision');
+legend('1 = delta, 2 = theta, 3 = alpha,  4 = beta');
 
+subplot(2, 1, 2);
+plot((0:(length(test_results_audio_samples)-1))/fs_word, test_results_audio_samples);
+title('Audio Samples');
+xlabel('Time (sec)');
+ylabel('Amplitude');
 
-
-
-
+% Play sound
+soundsc(test_results_audio_samples, fs_word);

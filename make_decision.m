@@ -12,7 +12,7 @@ function [decision, noise_mean, noise_std] = make_decision(frame, noise_mean, no
     mean_eta = 0.2; 
     std_eta = 0.2;
 
-    % Windows
+    % Windows (row vector)
     win_offset = 0.8;
     win_scale = 0.2;
     delta_win = (win_scale*hamming(5) + win_offset)';
@@ -47,7 +47,7 @@ function [decision, noise_mean, noise_std] = make_decision(frame, noise_mean, no
         noise_std = noise_std * std_eta + std(Frame_noise)*(1-std_eta);
     end
     
-    noise_threshold = noise_mean + 2*noise_std;
+    noise_threshold = noise_mean + 1.4*noise_std;
     delta_avg = mean(Frame_delta) - noise_threshold;
     theta_avg = mean(Frame_theta) - noise_threshold;
     alpha_avg = mean(Frame_alpha) - noise_threshold;
@@ -55,8 +55,8 @@ function [decision, noise_mean, noise_std] = make_decision(frame, noise_mean, no
     
     if (all([delta_avg, theta_avg, alpha_avg, beta_avg] <= 0))
         decision = 0;
-    else 
-        [~,index] = max([delta_avg theta_avg alpha_avg beta_avg]);
+    else
+        [~, index] = max([delta_avg theta_avg alpha_avg beta_avg]);
         decision = index;
     end 
 

@@ -11,18 +11,33 @@
 [thetaWord, fs_word]= audioread("data/Word wav files/thetaWord.wav");
 
 % Load EEG signal
-noisy = true;
-if noisy
-    % Noisy
-    name = "beta2";
-    eeg = load("data/EEGdata/Synthetic EEG Fs512Hz/Noise/" + name + ".mat").noisy_EEGsig;
+is_specified = false;
+is_combined = true;
+is_noise = false;
+if is_specified
+    eeg = load("data/EEGdata/ ... ... .csv");
 else
-    % Noiseless
-    i = 1;
-    eeg = load(sprintf("data/EEGdata/Synthetic EEG Fs512Hz/Noiseless/eeg%d.mat", i)).eeg;
+    if ~is_combined && is_noise
+        % Not combined, noisy
+        name = "beta2";
+        eeg = load("data/EEGdata/Synthetic EEG Fs512Hz/Noise/" + name + ".mat").noisy_EEGsig;
+    elseif ~is_combined && ~is_noise
+        % Not combined, noiseless
+        i = 6;      % i from 1 to 6
+        eeg = load("data/EEGdata/Synthetic EEG Fs512Hz/Noiseless/eeg" + i + ".mat").eeg;
+    elseif is_combined && is_noise
+        % Combined, noisy
+        set = 1;    % set 1 or 2
+        eeg = csvread("data/EEGdata/Synthetic EEG Fs512Hz/Noise/noisy_combined" + set + ".csv");
+    elseif is_combined && ~is_noise
+        % Combined, noiseless
+        eeg = csvread("data/EEGdata/Synthetic EEG Fs512Hz/Noiseless/noiseless_combined.csv");
+    end
 end
 
-% eeg = combine_word;
+% Ensure 'eeg' is a row vector
+% (:) unwraps the vector into a column, and .' transposes the vector
+eeg = eeg(:).';
 
 L = length(eeg);
 fs = 512;
@@ -70,7 +85,7 @@ end
 
 figure(5)
 plot(decision(2:end), 'LineWidth', 2)
-title('Results');
+title("Results");
 xlabel('Frame Number');
 ylabel('Decision');
 legend('1 = delta, 2 = theta, 3 = alpha,  4 = beta');
@@ -79,7 +94,7 @@ legend('1 = delta, 2 = theta, 3 = alpha,  4 = beta');
 %% Plot and play output from C++ code
 
 % Load test results
-% name = "theta1";
+name = "noiseless_combined";
 test_results_decisions = csvread("data/Test Results/" + name + "_decisions.csv");
 test_results_audio_samples = csvread("data/Test Results/" + name + "_audio_samples.csv");
 

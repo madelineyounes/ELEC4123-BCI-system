@@ -15,7 +15,7 @@ function [decision, noise_mean, noise_std] = make_decision(frame, noise_mean, no
     % Windows (row vector)
     win_offset = 0.8;
     win_scale = 0.2;
-    delta_win = (win_scale*hamming(5) + win_offset)';
+    delta_win = (win_scale*hamming(4) + win_offset)';
     theta_win = (win_scale*hamming(5) + win_offset)';
     alpha_win = (win_scale*hamming(5) + win_offset)';
     beta_win = (win_scale*hamming(29) + win_offset)';
@@ -25,8 +25,11 @@ function [decision, noise_mean, noise_std] = make_decision(frame, noise_mean, no
     Frame = Frame * (1/512);
     Frame = Frame(1:(length(frame)/2)); % Single sided power spectrum
     
+    figure(1);
+    plot(1:255, Frame(2:end));
+    
     % Frequency band windowing
-    Frame_delta = Frame(1:5);   % 0 - 4 Hz 
+    Frame_delta = Frame(2:5);   % 0 - 4 Hz 
     Frame_theta = Frame(5:9);   % 4 - 8 Hz
     Frame_alpha = Frame(9:13);  % 8 - 12 Hz
     Frame_beta = Frame(13:41);  % 12 - 40 Hz

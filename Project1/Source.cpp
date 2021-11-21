@@ -43,6 +43,9 @@ int main()
     alphaFile.load("../data/Word wav files/alphaWord.wav");
     betaFile.load("../data/Word wav files/betaWord.wav");
 
+    // Scale words
+    //bool is_scale = true;
+
     // Assume mono channel
     int channel = 0;
 

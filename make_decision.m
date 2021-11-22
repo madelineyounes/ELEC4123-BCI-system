@@ -24,12 +24,11 @@ function [decision, noise_mean, noise_std] = make_decision(frame, noise_mean, no
     Frame = abs(fft(frame)).^2;
     Frame = Frame * (1/512);
     Frame = Frame(1:(length(frame)/2)); % Single sided power spectrum
-    
-    figure(1);
-    plot(1:255, Frame(2:end));
+%     figure(1);
+%     plot(1:255, Frame(2:end));
     
     % Frequency band windowing
-    Frame_delta = Frame(2:5);   % 0 - 4 Hz 
+    Frame_delta = Frame(2:5);   % 1 - 4 Hz 
     Frame_theta = Frame(5:9);   % 4 - 8 Hz
     Frame_alpha = Frame(9:13);  % 8 - 12 Hz
     Frame_beta = Frame(13:41);  % 12 - 40 Hz
@@ -39,7 +38,7 @@ function [decision, noise_mean, noise_std] = make_decision(frame, noise_mean, no
     Frame_alpha = Frame_alpha .* alpha_win;
     Frame_beta = Frame_beta .* beta_win;
     
-    % Estimate noise from 40 - 255 Hz
+    % Estimate noise from 41 - 255 Hz
     Frame_noise = Frame(42:256);
     if (noise_mean == 0 && noise_std == 0)
         noise_mean = mean(Frame_noise);

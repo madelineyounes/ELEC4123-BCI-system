@@ -1,7 +1,0 @@
-﻿  Source.cpp
-C:\Users\dewon\Dropbox\21T3\ELEC4123 - DP\Topic 4 - Elective\ELEC4123-BCI-system\Project1\Source.cpp(65,13): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\dewon\Dropbox\21T3\ELEC4123 - DP\Topic 4 - Elective\ELEC4123-BCI-system\Project1\Source.cpp(66,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\dewon\Dropbox\21T3\ELEC4123 - DP\Topic 4 - Elective\ELEC4123-BCI-system\Project1\Source.cpp(110,33): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\dewon\Dropbox\21T3\ELEC4123 - DP\Topic 4 - Elective\ELEC4123-BCI-system\Project1\Source.cpp(111,66): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\dewon\Dropbox\21T3\ELEC4123 - DP\Topic 4 - Elective\ELEC4123-BCI-system\Project1\Source.cpp(116,96): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\dewon\Dropbox\21T3\ELEC4123 - DP\Topic 4 - Elective\ELEC4123-BCI-system\Project1\Source.cpp(125,14): error C3861: 'FFT': identifier not found

@@ -38,3 +38,14 @@ for i = 1:length(name)
     eeg = load([name{i} '.mat']).noisy_EEGsig';
     csvwrite([name{i} '.csv'], eeg);
 end
+
+%% Real to csv
+
+clear;
+
+data = load('data/EEGdata/Real EEG data/rec1.mat');
+fs = data.fs;
+eeg = data.channelData(:, 1);   % Get data in the first channel (column)
+csvwrite('data/EEGdata/Real EEG data/rec1.csv', eeg);
+
+

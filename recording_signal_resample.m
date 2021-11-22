@@ -23,25 +23,27 @@ csvwrite('recording_circuit_outputs/delta2out.csv', delta2out);
 names = ["alpha1"; "alpha2"; "theta1"; "theta2"; "beta1"; "beta2"; "delta1"; "delta2"];
 
 for i = 1:length(names)
-%     x_ref = csvread('data/EEGdata/Synthetic EEG Fs512Hz/Noise/theta2.csv');
+    x_ref = csvread('data/EEGdata/Synthetic EEG Fs512Hz/Noise/beta1.csv');
 
-    data = csvread('recording_circuit_outputs/' + names(i) + 'out.csv');
+%     data = csvread('recording_circuit_outputs/' + names(i) + 'out.csv');
+    data = csvread('recording_circuit_outputs/beta1out_fixed.csv');
     Tx = data(:, 1);
     x = data(:, 2);
 
     desiredFs = 512;
     [y, Ty] = resample(x, Tx, desiredFs);
 
-%     figure(1);
-%     subplot(2, 1, 1);
-%     plot((0:length(x_ref)-1)/desiredFs, x_ref);
-%     title("Raw Signal");
-% 
-%     subplot(2, 1, 2);
-%     plot(Tx, x, '.-', Ty, y, 'o-');
-%     legend('Original', 'Resampled');
-%     title("Amplified Signal");
+    figure(1);
+    subplot(2, 1, 1);
+    plot((0:length(x_ref)-1)/desiredFs, x_ref);
+    title("Raw Signal");
 
-    csvwrite('recording_circuit_outputs/' + names(i) + 'out_512Hz.csv', y);
+    subplot(2, 1, 2);
+    plot(Tx, x, '.-', Ty, y, 'o-');
+    legend('Original', 'Resampled');
+    title("Amplified Signal");
+
+    csvwrite('recording_circuit_outputs/beta1out_fixed_512Hz.csv', y);
+%     csvwrite('recording_circuit_outputs/' + names(i) + 'out_512Hz.csv', y);
 end
 

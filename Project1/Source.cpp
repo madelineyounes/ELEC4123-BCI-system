@@ -77,7 +77,7 @@ int main()
     string file_out_name_prefix;
     bool is_specified = false;  // Is the path name explicitly specified (e.g. testing output of task 1)
     // If is_specified, then the value of is_combined and is_noise is irrelevant
-    bool is_combined = true;    // Is it a combined EEG signal
+    bool is_combined = false;    // Is it a combined EEG signal
     bool is_noise = true;      // Is it a noisy or noiseless signal
     if (is_specified) {
         file_in_name = "../data/EEGdata/ ... ... .csv";
@@ -119,7 +119,6 @@ int main()
     file_in.open(file_in_name);
     while (file_in >> line) {
         EEG.push_back(stod(line));
-        cout << "EEG size: " << EEG.size() << "\n";
     }
     int L = EEG.size();
     int fs = 512;       // Synthetic EEG signals are sampled at 512 Hz
@@ -174,8 +173,6 @@ int main()
                 audio_samples.resize(audio_samples.size() + samples_per_hop, 0.0);
             }
         }
-
-        cout << audio_samples.size() << "\n";
     }
 
     // Write decision to csv file

@@ -11,11 +11,11 @@
 [thetaWord, fs_word]= audioread("data/Word wav files/thetaWord.wav");
 
 % Load EEG signal
-is_specified = true;
+is_specified = false;
 is_combined = false;
 is_noise = true;
 if is_specified
-    eeg = load("recording_circuit_outputs/beta2out_512Hz.csv");
+    eeg = load("recording_circuit_outputs/theta1out_512Hz.csv");
 else
     if ~is_combined && is_noise
         % Not combined, noisy
@@ -51,7 +51,7 @@ time_finish = datetime('now');
 noise_mean = 0;
 noise_std = 0;
 
-for i = (2:num_frames + 1) 
+for i = (2:num_frames + 1)
     tic
     
     % Frame choose
@@ -94,7 +94,7 @@ legend('1 = delta, 2 = theta, 3 = alpha,  4 = beta');
 %% Plot and play output from C++ code
 
 % Load test results
-name = "alpha1";
+name = "noisy_combined1";
 test_results_decisions = csvread("data/Test Results/" + name + "_decisions.csv");
 test_results_audio_samples = csvread("data/Test Results/" + name + "_audio_samples.csv");
 

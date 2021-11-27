@@ -305,7 +305,7 @@ int make_decision(vector<complex<float>> frame, int N, double* noise_mean, doubl
     Frame_complex.clear(); Frame_complex.shrink_to_fit();
     Frame.clear(); Frame.shrink_to_fit();
     Frame_delta.clear(); Frame_delta.shrink_to_fit();
-    Frame_delta.clear(); Frame_delta.shrink_to_fit();
+    Frame_theta.clear(); Frame_theta.shrink_to_fit();
     Frame_alpha.clear(); Frame_alpha.shrink_to_fit();
     Frame_beta.clear(); Frame_beta.shrink_to_fit();
     noise_squared.clear(); noise_squared.shrink_to_fit();

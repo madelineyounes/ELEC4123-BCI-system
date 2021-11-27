@@ -1,4 +1,4 @@
-%% View real EEG data (not on Github due to large file sizes)
+%% View real EEG data
 
 clear;
 i = 2;
@@ -96,7 +96,7 @@ text(6, 0, 'Theta', 'color', 'r', 'FontSize', 16, 'HorizontalAlignment', 'center
 text(10, 0, 'Alpha', 'color', 'r', 'FontSize', 16, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom');
 text(26, 0, 'Beta', 'color', 'r', 'FontSize', 16, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom');
 
-%% Plot Truncated EGG signal
+%% Plot Truncated EEG Signal
 truncate1 = 11 * 0.125 * fs; % Truncate signal
 truncate2 = 22 * 0.125 * fs;
 eeg = eeg(truncate1:truncate2);
